@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Untitled</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Standard Chartered Exchange Board - ZMW Rates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="tv-container">
+    <header>
+        <div class="flex justify-between items-center w-full">
+            <div class="flex items-center gap-4">
+                <button onclick="openManualPanel('forex')" class="text-gray-600 hover:text-blue-600 transition transform hover:scale-110 bg-white rounded-full p-3 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" aria-label="Open manual rate settings">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                </button>
+                <h1 class="header-title">ZMW Exchange Rate Board</h1>
+            </div>
+            <div class="text-right">
+                <div class="date-time" id="date">Monday, August 25, 2025</div>
+                <div class="time-only" id="time">09:21 PM</div>
+                <div id="api-status" class="text-sm mt-2 font-bold">
+                    <span class="api-status-dot status-offline"></span>OFFLINE MODE
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="rate-grid">
+            <div class="rate-column">
+                <h2 class="column-header stanchart-blue">Currencies</h2>
+                <div id="currency-names" class="flex flex-col flex-grow gap-3"></div>
+            </div>
+            <div class="rate-column">
+                <h2 class="column-header stanchart-green">Buying</h2>
+                <div id="buying-rates" class="flex flex-col flex-grow gap-3"></div>
+            </div>
+            <div class="rate-column">
+                <h2 class="column-header text-red-500">Selling</h2>
+                <div id="selling-rates" class="flex flex-col flex-grow gap-3"></div>
+            </div>
+            <div class="rate-column interest-column">
+                <h2 class="column-header stanchart-blue">Interest Rates</h2>
+                <div id="interest-rates" class="flex flex-col flex-grow justify-around"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lock Button -->
+    <button class="lock-button" onclick="toggleLock()" aria-label="Toggle page lock">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M5 12h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2zm0 0v6a2 2 0 002 2h10a2 2 0 002-2v-6"/>
+        </svg>
+    </button>
+
+    <!-- Lock Overlay -->
+    <div class="lock-overlay" id="lock-overlay">
+        <svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M5 12h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2zm0 0v6a2 2 0 002 2h10a2 2 0 002-2v-6"/>
+        </svg>
+        <div class="countdown-timer" id="countdown-timer">Page is locked. Click anywhere to enter password and unlock.</div>
+    </div>
+</div>
+
+<!-- Manual Override and Modal Panels -->
+<div id="manual-overlay" class="fixed inset-0 bg-black bg-opacity-60 hidden z-40 flex items-center justify-center p-4" onclick="closeManualPanel()">
+    <div class="bg-white bg-opacity-95 backdrop-blur-md p-6 rounded-xl shadow-2xl max-w-2xl w-full flex flex-col" onclick="event.stopPropagation()">
+        <div class="border-b border-gray-200 mb-4">
+            <nav class="-mb-px flex space-x-6" id="manual-panel-tabs">
+                <button onclick="switchManualTab('forex')" data-tab="forex" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-semibold text-sm">Forex Rates</button>
+                <button onclick="switchManualTab('interest')" data-tab="interest" class="tab-button whitespace-nowrap py-3 px-1 border-b-2 font-semibold text-sm text-gray-500 border-transparent">Interest Rates</button>
+            </nav>
+        </div>
+        <div class="overflow-y-auto max-h-[65vh]">
+            <div id="manual-inputs-forex" class="space-y-4"></div>
+            <div id="manual-inputs-interest" class="space-y-4 hidden"></div>
+        </div>
+        <div class="text-right mt-6 pt-4 border-t space-x-3">
+            <button onclick="resetAllRates()" class="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition shadow-sm font-semibold">Reset All</button>
+            <button onclick="closeManualPanel()" class="bg-gray-600 text-white px-5 py-2 rounded-lg hover:bg-gray-700 transition shadow-sm font-semibold">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="confirm-modal" class="fixed inset-0 bg-black bg-opacity-60 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full transform transition-all scale-95 opacity-0" id="confirm-modal-content">
+        <h4 id="confirm-title" class="text-lg font-bold text-gray-800 mb-4">Confirm Action</h4>
+        <p id="confirm-message" class="text-gray-600 mb-6">Are you sure?</p>
+        <div class="flex justify-end space-x-3">
+            <button id="confirm-cancel-btn" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition font-semibold">Cancel</button>
+            <button id="confirm-ok-btn" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition font-semibold">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+</body>
+</html>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

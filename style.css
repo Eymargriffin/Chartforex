@@ -1,0 +1,213 @@
+/* General Body and Layout Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Main container to fill the screen */
+.tv-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Allow content to expand beyond viewport */
+    padding: 2vw; /* Responsive padding */
+    position: relative; /* For lock button positioning */
+}
+
+/* Header Styles */
+header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center; /* Center header content */
+    align-items: center;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 1.5vw;
+    margin-bottom: 2vw;
+}
+
+/* Main content area */
+main {
+    flex-grow: 1;
+    display: flex;
+}
+
+/* Grid container for the columns */
+.rate-grid {
+    display: flex;
+    flex-grow: 1;
+    gap: 2vw;
+}
+
+/* Individual column styles */
+.rate-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+    background-color: #ffffff;
+    padding: 1.5vw;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.interest-column {
+    flex: 1.25;
+}
+
+/* Styling for rows within columns */
+.currency-row, .rate-box {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    font-weight: 800;
+    font-size: 2.2vw;
+    padding: 0.8vw 1vw;
+    min-height: 4vw; /* Uniform height for rate boxes */
+}
+
+.currency-row {
+    justify-content: flex-start;
+    font-size: 1.8vw;
+    font-weight: 700;
+}
+
+.currency-flag {
+    width: 5vw; /* Larger flags */
+    height: auto;
+    margin-right: 1vw;
+    border-radius: 0.375rem;
+}
+
+.rate-box {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease-in-out;
+}
+
+.interest-rate-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.6vw;
+    padding: 0.8vw;
+}
+
+.interest-rate-row .rate-box {
+    flex-grow: 0;
+    padding: 0.8vw 1.5vw;
+    font-size: 1.8vw;
+    min-width: 8vw; /* Uniform width for interest rate boxes */
+    text-align: center;
+}
+
+.rate-box.updated {
+    background: #e0f2fe;
+    color: #0c4a6e;
+    border-color: #7dd3fc;
+}
+.rate-box.manual-override {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    color: #b45309;
+}
+
+/* Color and Font Styles */
+.stanchart-blue { color: #0052A3; }
+.stanchart-green { color: #00A651; }
+.column-header {
+    font-size: 2.5vw;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 0.5vw;
+    flex-shrink: 0;
+}
+
+.header-title {
+    font-size: 3.5vw;
+    font-weight: 900;
+    color: #000000; /* Black font color */
+}
+.date-time { font-size: 2vw; font-weight: 700; } /* Larger date */
+.time-only { font-size: 1.8vw; font-weight: 600; } /* Larger time */
+
+/* Lock Button and Overlay */
+.lock-button {
+    position: fixed;
+    bottom: 2vw;
+    right: 2vw;
+    background-color: #0052A3;
+    color: white;
+    padding: 1vw;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    z-index: 101; /* Ensure button is above overlay */
+}
+.lock-button:hover {
+    transform: scale(1.1);
+}
+.lock-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: pointer; /* Indicate clickable */
+}
+.lock-overlay.active {
+    display: flex;
+}
+.lock-icon {
+    width: 10vw;
+    height: 10vw;
+    margin-bottom: 2vw;
+}
+.countdown-timer {
+    color: white;
+    font-size: 2.5vw;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* API Status and Toast */
+.api-status-dot { width: 1vw; height: 1vw; border-radius: 50%; display: inline-block; margin-right: 0.5vw; }
+.status-offline { background-color: #f59e0b; }
+.status-error { background-color: #ef4444; }
+.toast {
+    position: fixed;
+    top: 2vw;
+    right: 2vw;
+    background: #10b981;
+    color: white;
+    padding: 1vw 2vw;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+.toast.show { transform: translateX(0); }
+.toast.error { background: #ef4444; }
+.toast.warning { background: #f59e0b; }
+.tab-button.active { border-color: #0052A3; color: #0052A3; background-color: #e0f2fe; }
+
+/* Media Queries for TV/Computer Optimization */
+@media (max-width: 1366px) {
+    .header-title { font-size: 3vw; }
+    .column-header { font-size: 2.2vw; }
+    .currency-row { font-size: 1.6vw; }
+    .rate-box { font-size: 2vw; }
+    .interest-rate-row { font-size: 1.4vw; }
+    .interest-rate-row .rate-box { font-size: 1.6vw; }
+    .date-time { font-size: 1.8vw; }
+    .time-only { font-size: 1.6vw; }
+}
